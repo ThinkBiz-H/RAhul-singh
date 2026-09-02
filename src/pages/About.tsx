@@ -11,9 +11,6 @@ const About: React.FC = () => {
     biography.aboutImages.find((img) => img.primary)?.image ||
     biography.aboutImages[0]?.image ||
     "";
-  const otherImages = biography.aboutImages.filter(
-    (img) => img.image !== primaryImage,
-  );
 
   return (
     <div>

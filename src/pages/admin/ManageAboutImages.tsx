@@ -10,7 +10,7 @@ const ManageAboutImages: React.FC = () => {
     data,
     addAboutImage,
     replaceAboutImage,
-    deleteAboutImage,
+
     setPrimaryAboutImage,
   } = useData();
 
