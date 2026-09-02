@@ -16,12 +16,11 @@ import type { CloudinaryUploadResult } from "../../config/cloudinary";
 const ManageGallery: React.FC = () => {
   const {
     data,
-    addCategory,
-    deleteCategory,
     addImages,
     updateImage,
     replaceImage,
-    deleteImage,
+    addCategory,
+    deleteCategory,
     bulkDeleteImages,
   } = useData();
 
@@ -29,16 +28,23 @@ const ManageGallery: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [uploadCategory, setUploadCategory] = useState(data.categories[0]?.id || "");
+  const [uploadCategory, setUploadCategory] = useState(
+    data.categories[0]?.id || "",
+  );
   const [page, setPage] = useState(1);
   const PAGE_SIZE = 12;
 
   const filtered = useMemo(() => {
     let imgs = [...data.gallery].sort((a, b) => b.createdAt - a.createdAt);
-    if (activeCategory !== "all") imgs = imgs.filter((g) => g.categoryId === activeCategory);
+    if (activeCategory !== "all")
+      imgs = imgs.filter((g) => g.categoryId === activeCategory);
     if (query.trim()) {
       const q = query.toLowerCase();
-      imgs = imgs.filter((g) => g.title.toLowerCase().includes(q) || g.tags.some((t) => t.toLowerCase().includes(q)));
+      imgs = imgs.filter(
+        (g) =>
+          g.title.toLowerCase().includes(q) ||
+          g.tags.some((t) => t.toLowerCase().includes(q)),
+      );
     }
     return imgs;
   }, [data.gallery, activeCategory, query]);
@@ -78,8 +84,12 @@ const ManageGallery: React.FC = () => {
 
   return (
     <div>
-      <h1 className="font-display font-bold text-2xl text-navy mb-1">Gallery Management</h1>
-      <p className="text-ink/50 text-sm mb-8">Manage categories and images shown in the photo gallery</p>
+      <h1 className="font-display font-bold text-2xl text-navy mb-1">
+        Gallery Management
+      </h1>
+      <p className="text-ink/50 text-sm mb-8">
+        Manage categories and images shown in the photo gallery
+      </p>
 
       {/* Categories */}
       <div className="bg-white rounded-xl shadow-card p-6 mb-8">
@@ -123,7 +133,9 @@ const ManageGallery: React.FC = () => {
         <h2 className="font-semibold text-navy mb-4">Upload Images</h2>
         <div className="flex flex-col md:flex-row gap-4 items-start">
           <div className="w-full md:w-56">
-            <label className="block text-sm font-medium text-navy mb-1.5">Category</label>
+            <label className="block text-sm font-medium text-navy mb-1.5">
+              Category
+            </label>
             <select
               value={uploadCategory}
               onChange={(e) => setUploadCategory(e.target.value)}
@@ -137,7 +149,11 @@ const ManageGallery: React.FC = () => {
             </select>
           </div>
           <div className="flex-1 w-full">
-            <MultiImageUpload section="gallery" label="Images (multiple allowed)" onUploaded={handleUpload} />
+            <MultiImageUpload
+              section="gallery"
+              label="Images (multiple allowed)"
+              onUploaded={handleUpload}
+            />
           </div>
         </div>
       </div>
@@ -148,7 +164,9 @@ const ManageGallery: React.FC = () => {
           <button
             onClick={() => setActiveCategory("all")}
             className={`px-3 py-1.5 rounded-full text-sm font-medium ${
-              activeCategory === "all" ? "bg-primary text-white" : "bg-surface text-ink/70"
+              activeCategory === "all"
+                ? "bg-primary text-white"
+                : "bg-surface text-ink/70"
             }`}
           >
             All
@@ -158,7 +176,9 @@ const ManageGallery: React.FC = () => {
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
               className={`px-3 py-1.5 rounded-full text-sm font-medium ${
-                activeCategory === cat.id ? "bg-primary text-white" : "bg-surface text-ink/70"
+                activeCategory === cat.id
+                  ? "bg-primary text-white"
+                  : "bg-surface text-ink/70"
               }`}
             >
               {cat.name}
@@ -186,11 +206,16 @@ const ManageGallery: React.FC = () => {
         </div>
       </div>
 
-      <p className="text-sm text-ink/50 mb-4">{filtered.length} image{filtered.length !== 1 ? "s" : ""}</p>
+      <p className="text-sm text-ink/50 mb-4">
+        {filtered.length} image{filtered.length !== 1 ? "s" : ""}
+      </p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {paginated.map((img) => (
-          <div key={img.id} className="bg-white rounded-lg shadow-card overflow-hidden">
+          <div
+            key={img.id}
+            className="bg-white rounded-lg shadow-card overflow-hidden"
+          >
             <div className="relative">
               <ImageTile
                 src={img.image}
@@ -198,13 +223,16 @@ const ManageGallery: React.FC = () => {
                 section="gallery"
                 aspect="aspect-[4/3]"
                 onReplaced={(result) => replaceImage(img.id, result)}
-                onDelete={() => deleteImage(img.id)}
               >
                 <button
                   type="button"
-                  onClick={() => updateImage(img.id, { featured: !img.featured })}
+                  onClick={() =>
+                    updateImage(img.id, { featured: !img.featured })
+                  }
                   className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-md transition-colors ${
-                    img.featured ? "bg-primary text-white" : "bg-surface text-ink/60 hover:bg-line"
+                    img.featured
+                      ? "bg-primary text-white"
+                      : "bg-surface text-ink/60 hover:bg-line"
                   }`}
                 >
                   <FiStar size={12} /> {img.featured ? "Featured" : "Feature"}
@@ -215,7 +243,11 @@ const ManageGallery: React.FC = () => {
                 className="absolute top-2 left-2 bg-white/90 rounded p-1 text-navy z-10"
                 aria-label="Select image"
               >
-                {selected.has(img.id) ? <FiCheckSquare size={16} /> : <FiSquare size={16} />}
+                {selected.has(img.id) ? (
+                  <FiCheckSquare size={16} />
+                ) : (
+                  <FiSquare size={16} />
+                )}
               </button>
             </div>
             <div className="p-3">
@@ -226,7 +258,9 @@ const ManageGallery: React.FC = () => {
               />
               <select
                 value={img.categoryId}
-                onChange={(e) => updateImage(img.id, { categoryId: e.target.value })}
+                onChange={(e) =>
+                  updateImage(img.id, { categoryId: e.target.value })
+                }
                 className="w-full text-xs text-ink/60 mt-1 border-0 outline-none bg-transparent"
               >
                 {data.categories.map((cat) => (
@@ -240,7 +274,9 @@ const ManageGallery: React.FC = () => {
         ))}
       </div>
 
-      {filtered.length === 0 && <p className="text-ink/50 text-sm mt-6">No images found.</p>}
+      {filtered.length === 0 && (
+        <p className="text-ink/50 text-sm mt-6">No images found.</p>
+      )}
 
       {page * PAGE_SIZE < filtered.length && (
         <div className="text-center mt-8">

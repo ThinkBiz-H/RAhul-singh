@@ -24,7 +24,7 @@ function toImagePatch(result: CloudinaryUploadResult): ImagePatch {
   return {
     image: result.url,
     imagePublicId: result.publicId,
-    imageDeleteToken: result.deleteToken,
+  
     imageUploadedAt: Date.now(),
   };
 }
@@ -283,7 +283,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         ...prev.contact,
         contactBanner: upload.url,
         contactBannerPublicId: upload.publicId,
-        contactBannerDeleteToken: upload.deleteToken,
+     
       },
     }));
   }, []);

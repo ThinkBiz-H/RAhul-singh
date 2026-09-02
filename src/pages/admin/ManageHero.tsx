@@ -9,7 +9,7 @@ import type { SlideItem } from "../../types";
 const emptyTextFields = { title: "", subtitle: "", buttonText: "", buttonLink: "/contact" };
 
 const ManageHero: React.FC = () => {
-  const { data, addSlide, updateSlide, replaceSlideImage, deleteSlide } = useData();
+const { data, addSlide, updateSlide, replaceSlideImage } = useData();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState(emptyTextFields);
   const [newSlideText, setNewSlideText] = useState(emptyTextFields);
@@ -128,7 +128,7 @@ const ManageHero: React.FC = () => {
                 section="hero"
                 aspect="aspect-[4/3]"
                 onReplaced={(result) => replaceSlideImage(slide.id, result)}
-                onDelete={() => deleteSlide(slide.id)}
+         
               />
             </div>
 
