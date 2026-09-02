@@ -17,7 +17,7 @@ import type {
   SiteSettings,
   CloudinaryMeta,
 } from "../types";
-import { defaultData } from "../data/defaultData";
+
 import { loadJSON, saveJSON, STORAGE_KEYS, uid } from "../utils/storage";
 import {
   deleteFromCloudinary,
@@ -494,8 +494,41 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({
     [],
   );
 
+  const EMPTY_DATA: AppData = {
+    hero: { slides: [] },
+    biography: {
+      aboutImages: [],
+      heading: "",
+      subheading: "",
+      paragraphs: [],
+    },
+    categories: [],
+    gallery: [],
+    contact: {
+      contactBanner: "",
+      officeAddress: "",
+      email: "",
+      phone: "",
+      mapEmbedUrl: "",
+      workingHours: "",
+      social: {
+        facebook: "",
+        instagram: "",
+        twitter: "",
+        youtube: "",
+      },
+    },
+    messages: [],
+    settings: {
+      siteName: "",
+      logo: "",
+      footerText: "",
+      copyrightText: "",
+    },
+  };
+
   const resetAll = useCallback(() => {
-    setData(defaultData);
+    setData(EMPTY_DATA);
   }, []);
 
   return (
