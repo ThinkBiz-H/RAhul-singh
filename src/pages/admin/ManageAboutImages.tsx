@@ -6,29 +6,48 @@ import ImageTile from "../../components/shared/ImageTile";
 import type { CloudinaryUploadResult } from "../../config/cloudinary";
 
 const ManageAboutImages: React.FC = () => {
-  const { data, addAboutImage, replaceAboutImage, deleteAboutImage, setPrimaryAboutImage } = useData();
+  const {
+    data,
+    addAboutImage,
+    replaceAboutImage,
+    deleteAboutImage,
+    setPrimaryAboutImage,
+  } = useData();
 
   const handleUpload = (results: CloudinaryUploadResult[]) => {
     results.forEach((result, i) => {
-      addAboutImage(`About photo ${data.biography.aboutImages.length + i + 1}`, result);
+      addAboutImage(
+        `About photo ${data.biography.aboutImages.length + i + 1}`,
+        result,
+      );
     });
   };
 
   return (
     <div>
-      <h1 className="font-display font-bold text-2xl text-navy mb-1">About Images</h1>
+      <h1 className="font-display font-bold text-2xl text-navy mb-1">
+        About Images
+      </h1>
       <p className="text-ink/50 text-sm mb-8">
-        Manage the photos shown on the Home and About pages — stored on Cloudinary. The photo marked
-        <span className="text-primary font-medium"> Primary</span> is used as the main circular profile image.
+        Manage the photos shown on the Home and About pages — stored on
+        Cloudinary. The photo marked
+        <span className="text-primary font-medium"> Primary</span> is used as
+        the main circular profile image.
       </p>
 
       <div className="bg-white rounded-xl shadow-card p-6 mb-8">
         <h2 className="font-semibold text-navy mb-4">Add Image</h2>
-        <MultiImageUpload section="about" label="Upload one or more About photos" onUploaded={handleUpload} />
+        <MultiImageUpload
+          section="about"
+          label="Upload one or more About photos"
+          onUploaded={handleUpload}
+        />
       </div>
 
       {data.biography.aboutImages.length === 0 ? (
-        <p className="text-ink/50 text-sm">No about images yet. Upload one above.</p>
+        <p className="text-ink/50 text-sm">
+          No about images yet. Upload one above.
+        </p>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {data.biography.aboutImages.map((img) => (
@@ -44,7 +63,6 @@ const ManageAboutImages: React.FC = () => {
                 section="about"
                 aspect="aspect-square"
                 onReplaced={(result) => replaceAboutImage(img.id, result)}
-                onDelete={() => deleteAboutImage(img.id)}
               >
                 {!img.primary && (
                   <button
