@@ -10,9 +10,9 @@
 export type CloudinarySection = "hero" | "gallery" | "about" | "contact";
 
 export const CLOUDINARY_CONFIG = {
-  cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "",
-  uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "",
-  folder: import.meta.env.VITE_CLOUDINARY_FOLDER || "tjs-site",
+  cloudName: "uhsiyl60",
+  uploadPreset: "tjs-site",
+  folder: "tjs-site",
 } as const;
 
 export function isCloudinaryConfigured(): boolean {
